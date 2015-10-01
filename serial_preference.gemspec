@@ -2,6 +2,7 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'serial_preference/version'
+require 'yaml'
 
 Gem::Specification.new do |gem|
   gem.name          = "serial_preference"
@@ -21,6 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "activerecord", ">= 3.0.0"
 
   gem.add_development_dependency 'sqlite3'
+  gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'rspec-rails'
   gem.add_development_dependency "shoulda"
 
