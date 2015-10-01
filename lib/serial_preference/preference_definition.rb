@@ -10,7 +10,8 @@ module SerialPreference
       self.name = name.to_s
       opts.assert_valid_keys(:data_type,:default,:required,:field_type)
       self.data_type = @type = opts[:data_type] || :string
-      @column = ActiveRecord::ConnectionAdapters::Column.new(name.to_s,opts[:default],@type.to_s)
+      @conn ||= ActiveRecord::ConnectionAdapters::AbstractAdapter.new(nil, nil, nil)
+      @column = ActiveRecord::ConnectionAdapters::Column.new(name.to_s,opts[:default],@conn.lookup_cast_type(@type.to_s),@type.to_s)
       self.default = opts[:default]
       self.required = !!opts[:required]
       self.field_type = opts[:field_type]
