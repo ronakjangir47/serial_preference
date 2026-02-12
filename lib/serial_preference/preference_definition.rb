@@ -112,7 +112,12 @@ module SerialPreference
 
     def normalize_boolean(v)
       if rails_below_6?
-        return false if ["", "0", "false", "no"].include?(v.to_s.downcase)
+        return false if v == 0
+        return false if v == ""
+        return false if v == nil
+        return false if v.to_s.downcase == "false"
+        return false if v == "0"
+        return false if v.to_s.downcase == "no"
         v
       else
         return false if !v || (v.is_a?(String) && (v.downcase == "no"))
