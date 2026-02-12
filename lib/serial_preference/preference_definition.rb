@@ -10,7 +10,7 @@ module SerialPreference
       self.name = name.to_s
       opts.assert_valid_keys(:data_type, :default, :required, :field_type)
       self.data_type = @type = opts[:data_type] || :string
-      @column = rails_below_6? ? ActiveRecord::ConnectionAdapters::Column.new(name.to_s, opts[:default], column_type(@type)) : column_type(@type)
+      @column = rails_below_7? ? ActiveRecord::ConnectionAdapters::Column.new(name.to_s, opts[:default], column_type(@type)) : column_type(@type)
       self.default = opts[:default]
       self.required = !!opts[:required]
       self.field_type = opts[:field_type]
@@ -76,7 +76,7 @@ module SerialPreference
     private
 
     def column_type(type)
-      if rails_below_6?
+      if rails_below_7?
         column_type_below_6(type)
       else
         column_type_greater_6(type)
@@ -111,7 +111,7 @@ module SerialPreference
     end
 
     def normalize_boolean(v)
-      if rails_below_6?
+      if rails_below_7?
         return false if v == 0
         return false if v == ""
         return false if v == nil
@@ -129,8 +129,8 @@ module SerialPreference
       ActiveRecord::VERSION::MAJOR > 4 || (ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 2)
     end
 
-    def rails_below_6?
-      ActiveRecord::VERSION::MAJOR < 6
+    def rails_below_7?
+      ActiveRecord::VERSION::MAJOR < 7
     end
   end
 end
