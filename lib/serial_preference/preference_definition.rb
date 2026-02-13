@@ -77,13 +77,13 @@ module SerialPreference
 
     def column_type(type)
       if rails_below_7?
-        column_type_below_6(type)
+        column_type_below_7(type)
       else
-        column_type_greater_6(type)
+        column_type_greater_7(type)
       end
     end
 
-    def column_type_greater_6(type)
+    def column_type_greater_7(type)
       begin
         ActiveModel::Type.lookup(type)
       rescue ArgumentError
@@ -91,7 +91,7 @@ module SerialPreference
       end
     end
 
-    def column_type_below_6(type)
+    def column_type_below_7(type)
       if greater_or_equal_rails_42?
         case type
         when :boolean
