@@ -8,8 +8,6 @@ module SerialPreference
       return {} if yaml.nil?
 
       safe_load_with_symbols(yaml) || {}
-    rescue Psych::Exception, TypeError, ArgumentError
-      {}
     end
 
     def self.safe_load_with_symbols(yaml)
