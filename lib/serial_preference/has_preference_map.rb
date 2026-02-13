@@ -32,7 +32,11 @@ module SerialPreference
       private
 
       def build_preference_definitions
-        serialize self._preferences_attribute, Hash
+        if serialize_supports_coder?
+          serialize self._preferences_attribute, coder: SerialPreference::SafeYamlCoder, type: Hash
+        else
+          serialize self._preferences_attribute, Hash
+        end
 
         _preference_map.all_preference_definitions.each do |preference|
 
@@ -55,6 +59,11 @@ module SerialPreference
 
         end
       end
+
+      def serialize_supports_coder?
+        ActiveRecord::Base.respond_to?(:serialize) &&
+          ActiveRecord::Base.method(:serialize).parameters.any? { |p| p.include?(:coder) }
+      end
     end
 
     protected
@@ -71,6 +80,5 @@ module SerialPreference
         attribute[key.to_sym] = value
       end
     end
-
   end
 end

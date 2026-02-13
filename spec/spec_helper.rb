@@ -9,6 +9,7 @@ require "serial_preference/version"
 require 'serial_preference/preference_definition'
 require "serial_preference/preferenzer"
 require "serial_preference/has_preference_map"
+require 'serial_preference/safe_yaml_coder'
 
 FIXTURES_DIR = File.join(File.dirname(__FILE__), "fixtures")
 config = YAML::load(IO.read(File.dirname(__FILE__) + '/database.yml'))
