@@ -120,7 +120,7 @@ module SerialPreference
         return false if v.to_s.downcase == "no"
         v
       else
-        return false if !v || (v.is_a?(String) && (v.downcase == "no"))
+        return false if !v || v.to_s.downcase == "no"
         ActiveModel::Type::Boolean.new.cast(v.to_s.downcase)
       end
     end
